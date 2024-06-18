@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <title>Youtube Remake</title>
+    <link rel="icon" type="image/x-icon" href="youtube.ico">
+    <style>
+      body::-webkit-scrollbar {
+        width: 12px;               /* width of the entire scrollbar */
+      }
+
+      body::-webkit-scrollbar-track {
+        background: #0f0f0f;        /* color of the tracking area */
+      }
+
+      body::-webkit-scrollbar-thumb {
+        background-color: #ababab;    /* color of the scroll thumb */
+        border-radius: 20px;       /* roundness of the scroll thumb */
+        border: 4px solid #0f0f0f;  /* creates padding around scroll thumb */
+      }
+      
+      body {
+        background-color: #0f0f0f;
+        color: white;
+        padding-bottom: 1000px;
+        margin-top: 75px;
+        margin-right: 25px;
+        margin-left: 205px;
+      }
+
+      p {
+        font-family: Roboto, Arial;
+      }
+
+      .video-preview {
+        padding: 10px;
+ 
+      }
+      .thumbnail {
+        width: 100%;
+        border-radius: 10px;
+      }
+      
+      .videos {
+        margin-top: 20px;
+      }
+
+      .video-title {
+        margin-top: 0px;
+        margin-bottom: 0px;
+        width: 100%;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 17px;
+        
+      }
+
+      .channel-picture {
+        margin-right: 5px;
+      }
+
+      .video-info {
+        width: 250px;
+        margin-left: 6px;
+      }
+
+      .video-author {
+        font-size: 12px;
+        color: #aaa;
+        margin-top: 3px;
+        margin-bottom: 0px;
+
+      }
+      .video-stats {
+        font-size: 12px;
+        color: #aaa;
+        margin-top: 4px;
+        margin-bottom: 0px;
+
+      }
+
+      .pfp {
+        width: 100%;
+        border-radius: 20px;
+      }
+
+      .video-info-pfp {
+        margin-top: 15px;
+        display: grid;
+        grid-template-columns: 40px 1fr 10px;
+      }
+
+      .videos {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        column-gap:0px;
+        row-gap: 20px;
+      }
+
+      @media (max-width:1500px) {
+        .videos {
+          grid-template-columns: 1fr 1fr 1fr;
+        }
+      }
+
+      @media (max-width:1200px) {
+        .videos {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      @media (max-width:850px) {
+        .videos {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .video-preview:hover {
+        background-color: #3f3f3f;
+        border-radius: 10px;
+      }
+
+      div.top-bar {
+        position: -webkit-sticky;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+      }
+      .top-bar {
+        display: flex;
+        flex-direction: row;
+        height: 50px;
+        background-color:#0f0f0f;
+      }
+
+      .left-section {
+        flex: 2;
+        margin-right: 50px;
+        min-width:150px;
+        display: flex;
+        align-items: center;
+        padding-bottom: 3px;
+      }
+
+      .middle-section {
+        flex: 3 ;
+        display: flex;
+        align-items: center;
+      }
+
+      .right-section {
+        flex: 1;
+        margin-left: 50px;
+        min-width:150px;
+        display: flex;
+        align-items: center;
+        justify-content: right;
+      }
+
+      .hamburger-menu {
+        padding: 9px;
+        background-color: #0f0f0f;
+        margin-left: 12px;
+        border-style: none;
+        border-radius: 50%;
+        transition: background-color 0.2s;
+      }
+
+      .hamburger-menu:hover {
+        background-color: #272727;
+      }
+
+      .hamburger-menu:active {
+        background-color: #3f3f3f;
+      }
+
+      .youtube-logo {
+        margin-left: 13px;
+      }
+
+      .search-bar {
+        display: flex;
+        flex: 1;
+        height: 30px;
+        max-width: 425px;
+        margin-top: -4px;
+        background-color: #121212;
+        border-style: solid;
+        border-width: 1px;
+        border-color: #2c2c2c;
+        padding-left: 12px;
+        border-radius: 25px 0px 0px 25px;
+        font-weight: 500px;
+        margin-left: -20px;
+        color: white;
+      }
+
+      ::placeholder {
+        color: rgb(144, 144, 144);
+        font-family: roboto, Arial ;
+      }
+
+      .search {
+        height: 33px;
+        margin-top: -4px;
+        margin-left: -1px;
+        background-color: #222222;
+        border-style: solid;
+        border-style: solid;
+        border-width: 1px;
+        border-color: #2c2c2c;
+        width: 53px;
+        border-radius: 0 25px 25px 0;
+        padding-right: 10px;
+        padding-top:3px;
+        font-family: roboto, Arial ;
+        
+      }
+
+      .mic {
+        height: 33px;
+        margin-top: -4px;
+        margin-left: -1px;
+        background-color: #222222;
+        border-style: none;
+        border-width: 1px;
+        width: 33px;
+        border-radius: 25px;
+        padding-top:3px;
+        margin-left: 13px;
+        transition: background-color 0.2s;
+        padding-top: 5px;
+      }
+
+      .mic:hover {
+        background-color: #3d3d3d;
+      }
+
+      .mic:active {
+        background-color: #515151;
+      }
+
+      .upload-menu {
+        padding: 9px;
+        background-color: #0f0f0f;
+        margin-left: 5px;
+        border-style: none;
+        border-radius: 50%;
+        transition: background-color 0.2s;
+        width: 36px;
+      }
+      
+      .upload-menu:hover {
+        background-color: #272727;
+      }
+
+      .upload-menu:active {
+        background-color: #3f3f3f;
+      }
+
+      .pfp-channel {
+        border-radius: 15px;
+        margin-left: 15px;
+        margin-right: 22px;
+      }
+
+      
+      .side-bar-rec {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+      }
+
+      div.side-bar {
+        position: fixed;
+        top: 50px;
+        height: 100%;
+        width: 200px;
+        left: 0;
+        z-index: 100;
+      }
+
+      div.rec {
+        position: fixed;
+        top: 50px;
+        height: 40px;
+        width: 100%;
+        left: 200px;
+        z-index: 100;
+      }
+
+      .rec {
+        background-color: #0f0f0f;
+        display: flex;
+        align-items: center;
+      }
+
+      div.videos {
+        position: static;
+      }
+
+      .all {
+        margin-top: 3px;
+        font-size: 12px;
+        color:#0f0f0f;
+        background-color: white;
+        border-style: none;
+        border-radius: 5px;
+        font-weight: 500;
+        width: 32px;
+        height: 27px;
+        margin-left: 10px;
+        font-family: roboto, Arial ;
+        margin-bottom: 10px;
+      }
+
+      .others {
+        margin-top: 3px;
+        font-size: 11.5px;
+        color:white;
+        background-color: #282828;
+        border-style: none;
+        border-radius: 5px;
+        font-weight: 500;
+        margin-left: 12px;
+        padding: 7px 10px 7px 10px;
+        font-weight: 700;
+        font-family: roboto, Arial ;
+        margin-bottom: 10px;
+        transition: background-color 0.2s;
+        white-space: nowrap;
+      }
+
+      .others:hover {
+        background-color:#3f3f3f;
+      }
+
+      .video-time {
+        font-family: roboto, arial;
+        font-size: 11px;
+        padding:3px 5px 3px 5px;
+        background-color: rgb(0, 0, 0, 0.7);
+        color: white;
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        border-radius: 3px;
+      }
+
+      .thumbnail-row {
+        position: relative;
+      }
+
+      .side-bar { 
+        background-color: #0f0f0f;
+        overflow: scroll;
+        padding-bottom: 1000px;
+      }
+
+      ::-webkit-scrollbar {
+        width: 12px;      
+        height: 5px;         /* width of the entire scrollbar */
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #0f0f0f;        /* color of the tracking area */
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background-color: #717171;    /* color of the scroll thumb */
+        border-radius: 20px;       /* roundness of the scroll thumb */
+        border: 4px solid #0f0f0f;  /* creates padding around scroll thumb */
+      }
+      
+
+      
+
+      .buttons {
+        background-color: #0f0f0f;
+        height: 30px;
+        width: 85%;
+        margin: 10px;
+        margin-top: 3px;
+        border-radius: 8px;
+        display: grid;
+        grid-template-columns: 50px 1fr;
+        align-items: center;
+        font-family: roboto, arial;
+        margin-bottom: 0;
+        font-size: 12px;
+        padding: 0;
+        transition: background-color 0.2s;
+      }
+
+      .buttons:hover {
+        background-color: #272727;
+      }
+
+      .buttons:active {
+        background-color: #3c3c3c;
+      }
+
+      .buttons-click {
+        background-color: #272727;
+        height: 30px;
+        width: 85%;
+        margin: 10px;
+        margin-top: 3px;
+        border-radius: 8px;
+        display: grid;
+        grid-template-columns: 50px 1fr;
+        align-items: center;
+        font-family: roboto, arial;
+        margin-bottom: 0;
+        font-size: 12px;
+        font-weight: 500;
+        padding: 0;
+      }
+
+      .side {
+        list-style: none;
+      }
+
+      .side-2 {
+        list-style: none;
+        margin-top: -20px;
+      }
+
+      .icon {
+       padding-left: 10px;
+       padding-top: 5px;
+      }
+
+      .you {
+        padding-left: 10px;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .sub-pfp {
+        border-radius: 10px;
+        margin-left: 10px;
+        margin-top: 3px;
+
+        
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="sticky">
+      <div class="top-bar">
+        <div class="left-section">
+          <button class="hamburger-menu">
+            <img src="hamburger.png" height="11px" width="15px">
+          </button>
+          <img class="youtube-logo" src="youtube.png" width="74px" height="16px">
+        </div>
+
+        <div class="middle-section">
+  
+          <input class="search-bar" type="text" placeholder="Search">
+          <button class="search">
+            <img class="search-icon" src="search.png" height="14px">
+          </button>
+          <button class="mic">
+            <img class="search-icon" src="mic.png" height="17px">
+          </button>
+
+        </div>
+
+        <div class="right-section">
+          <button class="upload-menu">
+            <img src="upload.png" height="16px">
+          </button>
+          <button class="upload-menu">
+            <img class="search-icon" src="notification.png  " height="16px">
+          </button>
+          <img class="pfp-channel" src="pfp/channel-pfp.jpg" height="27px">
+        </div>
+      </div>
+      <div class="side-bar-rec">
+        <div class="side-bar">
+          <li class="side">
+            <ul class="buttons-click">
+             <div>
+              <img class="icon" src="home.png" width="20px">
+             </div> 
+             <div>Home</div>
+            </ul>
+            <ul class="buttons">
+              <div>
+                <img class="icon" src="shorts.png" width="20px">
+               </div> 
+               <div>Shorts</div>
+            </ul>
+            <ul class="buttons">
+              <div>
+                <img class="icon" src="subscriptions.png" width="20px">
+              </div> 
+              <div>Subscriptions</div>
+            </ul>
+          </li>
+          <p style="color: #515151;margin-top: -2px; margin-left: 10px;">━━━━━━━━━━</p>
+
+          <li class="side-2">
+            <ul class="buttons">
+               <div class="you">You</div>
+               <div>
+                <img style="margin-left: -10px;margin-top: 4px;" src="idk.png" width="15px">
+               </div>
+            </ul>
+            <ul class="buttons">
+              <div>
+                <img class="icon" src="your channel.png" width="20px">
+              </div> 
+              <div>Your Channel</div>
+            </ul>
+            <ul class="buttons">
+              <div>
+                <img class="icon" src="history.png" width="20px">
+              </div> 
+              <div>History</div>
+            </ul>
+            <ul class="buttons">
+              <div>
+                <img class="icon" src="playlists.png" width="20px">
+              </div> 
+              <div>Playlists</div>
+            </ul>
+            <ul class="buttons">
+              <div>
+                <img class="icon" src="your videos.png" width="20px">
+              </div> 
+              <div>Your videos</div>
+            </ul>
+            <ul class="buttons">
+              <div>
+                <img class="icon" src="match later.png" width="20px">
+              </div> 
+              <div>Watch later</div>
+            </ul>
+            <ul class="buttons">
+              <div>
+                <img class="icon" src="liked videos.png" width="20px">
+              </div> 
+              <div>Liked videos</div>
+            </ul>
+          </li>
+          
+          <p style="color: #515151;margin-top: -2px;">━━━━━━━━━━━</p>
+
+          <li class="side-2">
+            <ul class="buttons">
+              <div style="font-weight: 500;" class="you">Subscriptions</div>
+            </ul>
+            <ul class="buttons">
+              <div>
+                <img class="sub-pfp" src="pfp/pfp_1.png" width="20px">
+              </div> 
+              <div>ZmjjKK</div>
+            </ul>
+            <ul class="buttons">
+              <div>
+                <img class="sub-pfp" src="pfp/pfp_2.png" width="20px">
+              </div> 
+              <div>Kaemi</div>
+            </ul>
+            <ul class="buttons">
+              <div>
+                <img class="sub-pfp" src="pfp/pfp_3.png" width="20px">
+              </div> 
+              <div>BWF TV</div>
+            </ul>
+            <ul class="buttons">
+              <div>
+                <img class="sub-pfp" src="pfp/pfp_4.png" width="20px">
+              </div> 
+              <div>Aaron Jack</div>
+            </ul>
+            <ul class="buttons">
+              <div>
+                <img class="sub-pfp" src="pfp/pfp_5.png" width="20px">
+              </div> 
+              <div>prim</div>
+            </ul>
+            <ul class="buttons">
+              <div>
+                <img class="sub-pfp" src="pfp/pfp_6.png" width="20px">
+              </div> 
+              <div>TenZ</div>
+            </ul>
+            <ul class="buttons">
+              <div>
+                <img class="sub-pfp" src="pfp/pfp_7.png" width="20px">
+              </div> 
+              <div>Asgard Sports</div>
+            </ul>
+            <ul class="buttons">
+              <div>
+                <img class="icon" src="down.png" width="20px">
+              </div> 
+              <div>Show more</div>
+            </ul>  
+          </li>
+
+          <p style="color: #515151;margin-top: -2px;">━━━━━━━━━━━</p>
+
+          <li class="side-2">
+            <ul class="buttons">
+              <div style="font-weight: 500;" class="you">Explore</div>
+            </ul>
+            <ul class="buttons">
+              <div>
+                <img class="icon" src="trending.png" width="20px">
+              </div> 
+              <div>Trending</div>
+            </ul>
+            <ul class="buttons">
+              <div>
+                <img class="icon" src="music.png" width="20px">
+              </div> 
+              <div>Music</div>
+            </ul>
+            <ul class="buttons">
+              <div>
+                <img class="icon" src="movies.png" width="20px">
+              </div> 
+              <div>Movies</div>
+            </ul>
+            <ul class="buttons">
+              <div>
+                <img class="icon" src="gaming.png" width="20px">
+              </div> 
+              <div>Gaming</div>
+            </ul>
+            <ul class="buttons">
+              <div>
+                <img class="icon" src="news.png" width="20px">
+              </div> 
+              <div>News</div>
+            </ul>
+            <ul class="buttons">
+              <div>
+                <img class="icon" src="sports.png" width="20px">
+              </div> 
+              <div>Sports</div>
+            </ul>
+          </li>
+
+          <p style="color: #515151;margin-top: -2px;">━━━━━━━━━━━</p>
+
+          <li class="side-2">
+            <ul class="buttons">
+              <div style="font-weight: 500;" class="you">More<span style="color: #0f0f0f;">_</span>From<span style="color: #0f0f0f;">_</span>Youtube</div>
+            </ul>
+            <ul class="buttons">
+              <div>
+                <img class="icon" src="youtube premium.svg" width="20px">
+              </div> 
+              <div>Youtube Premium</div>
+            </ul>
+            <ul class="buttons">
+              <div>
+                <img class="icon" src="youtube studio.svg" width="20px">
+              </div> 
+              <div>Youtube Studio</div>
+            </ul>
+            <ul class="buttons">
+              <div>
+                <img class="icon" src="youtube music.svg" width="20px">
+              </div> 
+              <div>Youtube Music</div>
+            </ul>
+            <ul class="buttons">
+              <div>
+                <img class="icon" src="youtube kids.svg" width="20px">
+              </div> 
+              <div>Youtube Kids</div>
+            </ul>
+          </li>
+
+          <p style="color: #515151;margin-top: -2px;">━━━━━━━━━━━</p>
+
+          <li class="side-2">
+            <ul class="buttons">
+              <div>
+                <img class="icon" src="settings.png" width="20px">
+              </div> 
+              <div>Settings</div>
+            </ul>
+            <ul class="buttons">
+              <div>
+                <img class="icon" src="report history.png" width="20px">
+              </div> 
+              <div>Report History</div>
+            </ul>
+            <ul class="buttons">
+              <div>
+                <img class="icon" src="help.png" width="20px">
+              </div> 
+              <div>Help</div>
+            </ul>
+            <ul class="buttons">
+              <div>
+                <img class="icon" src="send feedback.png" width="20px">
+              </div> 
+              <div>Send Feedback</div>
+            </ul>
+          </li>
+
+          <p style="color: #515151;margin-top: -2px;">━━━━━━━━━━━</p>
+
+          <P style="font-size: 11px; margin-left:20px;line-height: 15px;color: #aaa;margin-top: -10px;font-weight: 500;">
+            About Press  Copyright<br>Contact us Creators Advertise Developers
+          </p>
+
+          <P style="font-size: 11px; margin-left:20px;line-height: 15px;color: #aaa;font-weight: 500;">
+            Terms Privacy Policy & Safety How YouTube works Test new features
+          </p>
+
+          <p style="font-size: 11px; margin-left:20px;line-height: 15px;color: #717171;font-weight: 500;">
+            © 2024 Google LLC
+          </p>
+
+
+          <br>
+          <br>
+          <br>
+        </div>
+
+        <div class="rec">
+          <button class="all">All</button>
+          <button class="others">Gaming</button>
+          <button class="others">Valorant</button>
+          <button class="others">Wuthering Waves</button>
+          <button class="others">Live</button>
+          <button class="others">Badminton</button>
+          <button class="others">Web Development</button>
+          <button class="others">Computer Hardware</button>
+          <button class="others">3D computer graphics</button>
+          <button class="others">Algorithms</button>
+          <button class="others">League of Legends</button>
+          <button class="others">Algebra</button>
+          <button class="others">Minecraft</button>
+          <button class="others">Editing</button>
+          <button class="others">Watched</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="videos">
+      <div class="video-preview">
+        <a style="text-decoration: none;color: white;" href="https://youtu.be/Ilr1rIthoMU?si=hmTshFI56HAyb2rx">
+        <div class="thumbnail-row">
+          <img class="thumbnail" src="thumbnail/thumbnail_1.jpg">
+          <div class="video-time">
+            10:35
+          </div>
+        </div>
+        <div class="video-info-pfp">
+          <div class="channel-picture">
+            <img class="pfp" src="pfp/pfp_1.png">
+          </div>
+          <div class="video-info">
+            <p class="video-title">
+              Kangkang About His Bad Performance at Masters Shanghai
+            </p>
+            <p class="video-author">
+              ZmjjKK
+            </p>
+            <p class="video-stats">
+              9.6k views  •  11 hours ago
+            </p>
+          </div>
+          <div class="dot">
+            ⫶
+          </div>
+        </div>
+      </a>
+      </div>
+  
+      <div class="video-preview">
+        <a style="text-decoration: none;color: white;" href="https://youtu.be/uXozXrKzPGs?si=BPPnjMj-GC1g2z23">
+        <div class="thumbnail-row">
+          <img class="thumbnail" src="thumbnail/thumbnail_2.jpg">
+          <div class="video-time">
+            9:36
+          </div>
+        </div>
+        <div class="video-info-pfp">
+          <div class="channel-picture">
+            <img class="pfp" src="pfp/pfp_2.png">
+          </div>
+          <div class="video-info">
+            <p class="video-title">
+              Smurfing in the Top 0.3%...
+            </p>
+            <p class="video-author">
+              Kaemi
+            </p>
+            <p class="video-stats">
+              296K views  •  3 weeks ago
+            </p>
+          </div>
+          <div class="dot">
+            ⫶
+          </div>
+        </div>
+        </a>
+      </div>  
+
+      <div class="video-preview">
+        <a style="text-decoration: none;color: white;" href="https://www.youtube.com/live/JdcAAtqftUw?si=uxqB68trDFvgBmv3">
+        <div class="thumbnail-row">
+          <img class="thumbnail" src="thumbnail/thumbnail_3.jpg">
+          <div class="video-time">
+            57:19
+          </div>
+        </div>
+        <div class="video-info-pfp">
+          <div class="channel-picture">
+            <img class="pfp" src="pfp/pfp_3.png">
+          </div>
+          <div class="video-info">
+            <p class="video-title">
+              LI-NING China Masters 2023 | Lee Zii Jia (MAS) vs. Lu Guang Zu (CHN) | R16
+            </p>
+            <p class="video-author">
+              BWF TV
+            </p>
+            <p class="video-stats">
+              99K views  •  6 months ago
+            </p>
+          </div>
+          <div class="dot">
+            ⫶
+          </div>
+        </div>
+        </a>
+      </div>  
+
+      <div class="video-preview">
+        <a style="text-decoration: none;color: white;" href="https://www.youtube.com/live/JdcAAtqftUw?si=uxqB68trDFvgBmv3">
+        <div class="thumbnail-row">
+          <img class="thumbnail" src="thumbnail/thumbnail_4.jpg">
+          <div class="video-time">
+            5:00
+          </div>
+        </div>
+        <div class="video-info-pfp">
+          <div class="channel-picture">
+            <img class="pfp" src="pfp/pfp_4.png">
+          </div>
+          <div class="video-info">
+            <p class="video-title">
+              HTML in 5 minutes
+            </p>
+            <p class="video-author">
+              Aaron Jack
+            </p>
+            <p class="video-stats">
+              385K views  •  3 years ago
+            </p>
+          </div>
+          <div class="dot">
+            ⫶
+          </div>
+        </div>
+        </a>
+      </div>  
+
+      <div class="video-preview">
+        <a style="text-decoration: none;color: white;" href="https://youtu.be/eTKBv9PVABA?si=E5VOza8XKTyyk7Ho">
+          <div class="thumbnail-row">
+            <img class="thumbnail" src="thumbnail/thumbnail_5.jpg">
+            <div class="video-time">
+              19:19
+            </div>
+          </div>
+          <div class="video-info-pfp">
+            <div class="channel-picture">
+              <img class="pfp" src="pfp/pfp_5.png">
+            </div>
+            <div class="video-info">
+              <p class="video-title">
+                9 Levels of VCT Yoru - Noob to Masterclass
+              </p>
+              <p class="video-author">
+                prim
+              </p>
+              <p class="video-stats">
+                257K views  •  2 months ago
+              </p>
+            </div>
+            <div class="dot">
+              ⫶
+            </div>
+          </div>
+        </a>
+      </div>  
+
+      <div class="video-preview">
+        <a style="text-decoration: none;color: white;" href="https://youtu.be/QzZVLJ23Ank?si=eSh_c-DheoaoZbTx">
+        <div class="thumbnail-row">
+          <img class="thumbnail" src="thumbnail/thumbnail_6.jpg">
+          <div class="video-time">
+            26:24
+          </div>
+        </div>
+        <div class="video-info-pfp">
+          <div class="channel-picture">
+            <img class="pfp" src="pfp/pfp_6.png">
+          </div>
+          <div class="video-info">
+            <p class="video-title">
+              TenZ & Kyedae TRYING VALORANT CONSOLE FOR THE FIRST TIME !!! | ...
+            </p>
+            <p class="video-author">
+              TenZ
+            </p>
+            <p class="video-stats">
+              556K views  •  6 days ago
+            </p>
+          </div>
+          <div class="dot">
+            ⫶
+          </div>
+        </div>
+        </a>
+      </div>  
+
+      <div class="video-preview">
+        <a style="text-decoration: none;color: white;" href="https://youtu.be/LZYkYeKmqT4?si=6ohAShzGMecdNkOe">
+        <div class="thumbnail-row">
+          <img class="thumbnail" src="thumbnail/thumbnail_7.jpg">
+          <div class="video-time">
+            49:37
+          </div>
+        </div>
+        <div class="video-info-pfp">
+          <div class="channel-picture">
+            <img class="pfp" src="pfp/pfp_7.png">
+          </div>
+          <div class="video-info">
+            <p class="video-title">
+              FINAL | LEE Zii Jia (MAS) vs Kodai NARAOKA (JPN) | Australian Open ...
+            </p>
+            <p class="video-author">
+              Asgard Sports
+            </p>
+            <p class="video-stats">
+              95K views •  6 hours ago
+            </p>
+          </div>
+          <div class="dot">
+            ⫶
+          </div>
+        </div>
+        </a>
+      </div>  
+
+      <div class="video-preview">
+        <a style="text-decoration: none;color: white;" href="https://youtu.be/m8jURD77ZPE?si=KVpAPKjek9vRI3M_">
+        <div class="thumbnail-row">
+          <img class="thumbnail" src="thumbnail/thumbnail_8.jpg">
+          <div class="video-time">
+            7:38
+          </div>
+        </div>
+        <div class="video-info-pfp">
+          <div class="channel-picture">
+            <img class="pfp" src="pfp/pfp_8.png">
+          </div>
+          <div class="video-info">
+            <p class="video-title">
+              VALORANT TOP 25 BEST VCT ACES EVER!
+            </p>
+            <p class="video-author">
+              PRISU
+            </p>
+            <p class="video-stats">
+              41K views  •  4 weeks ago
+            </p>
+          </div>
+          <div class="dot">
+            ⫶
+          </div>
+        </div>
+        </a>
+      </div>  
+      <div class="video-preview">
+        <a style="text-decoration: none;color: white;" href="https://youtu.be/inrA9ZQJUBc?si=5j1zH2mFklE7eDGS">
+        <div class="thumbnail-row">
+          <img class="thumbnail" src="thumbnail/thumbnail_9.jpg">
+          <div class="video-time">
+            10:35
+          </div>
+        </div>
+        <div class="video-info-pfp">
+          <div class="channel-picture">
+            <img class="pfp" src="pfp/pfp_9.png">
+          </div>
+          <div class="video-info">
+            <p class="video-title">
+              Jinhsi and Rover vs Scar Cutscene | Wuthering Waves
+            </p>
+            <p class="video-author">
+              DrZERO's Lab
+            </p>
+            <p class="video-stats">
+             728 views  •  2 days ago
+            </p>
+          </div>
+          <div class="dot">
+            ⫶
+          </div>
+        </div>
+        </a>
+      </div>
+  
+      <div class="video-preview">
+        <a style="text-decoration: none;color: white;" href="https://youtu.be/-bnVGH62Yho?si=CVygbi3QjH6pYxdU">
+        <div class="thumbnail-row">
+          <img class="thumbnail" src="thumbnail/thumbnail_10.jpg">
+          <div class="video-time">
+            3:47
+          </div>
+        </div>
+        <div class="video-info-pfp">
+          <div class="channel-picture">
+            <img class="pfp" src="pfp/pfp_10.png">
+          </div>
+          <div class="video-info">
+            <p class="video-title">
+              Trying and Exposing Discord Nitro Generators (ft. ChatGPT)
+            </p>
+            <p class="video-author">
+              No Text To Speech
+            </p>
+            <p class="video-stats">
+              1.3M views  •  3 months ago
+            </p>
+          </div>
+          <div class="dot">
+            ⫶
+          </div>
+        </div>
+        </a>
+      </div>  
+
+      <div class="video-preview">
+        <a style="text-decoration: none;color: white;" href="https://youtu.be/vEPBVdlgi6I?si=YPEaQ_PO0fGZCZ2N">
+        <div class="thumbnail-row">
+          <img class="thumbnail" src="thumbnail/thumbnail_11.jpg">
+          <div class="video-time">
+            11:48
+          </div>
+        </div>
+        <div class="video-info-pfp">
+          <div class="channel-picture">
+            <img class="pfp" src="pfp/pfp_11.png">
+          </div>
+          <div class="video-info">
+            <p class="video-title">
+              【Punishing Gray Raven: CN】All Characters Ultimates 全必殺技集【パ...
+            </p>
+            <p class="video-author">
+              PGR夜【WW】
+            </p>
+            <p class="video-stats">
+              195K views  •  1 year ago
+            </p>
+          </div>
+          <div class="dot">
+            ⫶
+          </div>
+        </div>
+        </a>
+      </div>  
+
+      <div class="video-preview">
+        <a style="text-decoration: none;color: white;" href="https://youtu.be/wTilO25cARk?si=zzFr8lZUT_6Q7k2Y">
+        <div class="thumbnail-row">
+          <img class="thumbnail" src="thumbnail/thumbnail_12.jpg">
+          <div class="video-time">
+            8:28
+          </div>
+        </div>
+        <div class="video-info-pfp">
+          <div class="channel-picture">
+            <img class="pfp" src="pfp/pfp_12.png">
+          </div>
+          <div class="video-info">
+            <p class="video-title">
+              Lunar Client's Biggest Clone  
+            </p>
+            <p class="video-author">
+              CalebIsSalty
+            </p>
+            <p class="video-stats">
+              604K views  •  1 years ago
+            </p>
+          </div>
+          <div class="dot">
+            ⫶
+          </div>
+        </div>
+        </a>
+      </div>  
+
+      <div class="video-preview">
+        <a style="text-decoration: none;color: white;" href="https://youtu.be/OjEg0IBR_ak?si=eDzsXzwqXNmWvMp3">
+        <div class="thumbnail-row">
+          <img class="thumbnail" src="thumbnail/thumbnail_13.jpg">
+          <div class="video-time">
+            8:08
+          </div>
+        </div>
+        <div class="video-info-pfp">
+          <div class="channel-picture">
+            <img class="pfp" src="pfp/pfp_13.png">
+          </div>
+          <div class="video-info">
+            <p class="video-title">       
+              The Easiest Way to Build Websites
+            </p>
+            <p class="video-author">
+              Sajid
+            </p>
+            <p class="video-stats">
+             316K views  •  1 months ago
+            </p>
+          </div>
+          <div class="dot">
+            ⫶
+          </div>
+        </div>
+        </a>
+      </div>  
+
+      <div class="video-preview">
+        <a style="text-decoration: none;color: white;" href="https://youtu.be/oIDLbk1hf_M?si=9n7VpcxEYmRxTB5j">
+        <div class="thumbnail-row">
+          <img class="thumbnail" src="thumbnail/thumbnail_14.jpg">
+          <div class="video-time">
+            42:15
+          </div>
+        </div>
+        <div class="video-info-pfp">
+          <div class="channel-picture">
+            <img class="pfp" src="pfp/pfp_14.png">
+          </div>
+          <div class="video-info">
+            <p class="video-title">
+              SINATRAA REACTS TO SENTINELS VS 100T (MATCH OF THE CENTURY)
+            </p>
+            <p class="video-author">  
+              Sinatraa
+            </p>
+            <p class="video-stats">
+              107K views  •  11 months ago
+            </p>
+          </div>
+          <div class="dot">
+            ⫶
+          </div>
+        </div>
+        </a>
+      </div>  
+
+      <div class="video-preview">
+        <a style="text-decoration: none;color: white;" href="https://www.youtube.com/live/MuajJZG-iu0?si=zsnlR8VeK268vqCT">
+        <div class="thumbnail-row">
+          <img class="thumbnail" src="thumbnail/thumbnail_15.jpg">
+          <div class="video-time">
+            6:52:05
+          </div>
+        </div>
+        <div class="video-info-pfp">
+          <div class="channel-picture">
+            <img class="pfp" src="pfp/pfp_15.png">
+          </div>
+          <div class="video-info">
+            <p class="video-title">
+              TH vs. GEN - VCT Masters Shanghai - Grand Final
+            </p>
+            <p class="video-author">
+              Asgard Sports
+            </p>
+            <p class="video-stats">
+              1.4M views •  streamed 8 days ago
+            </p>
+          </div>
+          <div class="dot">
+            ⫶
+          </div>
+        </div>
+        </a>
+      </div>  
+
+      <div class="video-preview">
+        <a style="text-decoration: none;color: white;" href="https://youtu.be/BysVax3MFe8?si=v6nypnhmMP5Uvfgl">
+        <div class="thumbnail-row">
+          <img class="thumbnail" src="thumbnail/thumbnail_16.jpg">
+          <div class="video-time">
+            4:27
+          </div>
+        </div>
+        <div class="video-info-pfp">
+          <div class="channel-picture">
+            <img class="pfp" src="pfp/pfp_16.png">
+          </div>
+          <div class="video-info">
+            <p class="video-title">
+              Remote Control ANY PC!
+            </p>
+            <p class="video-author">
+              ebola man
+            </p>
+            <p class="video-stats">
+              688K views  •  5 months ago
+            </p>
+          </div>
+          <div class="dot">
+            ⫶
+          </div>
+        </div>
+        </a>
+      </div>  
+    </div>
+
+ 
+
+ 
+
+    
+      
